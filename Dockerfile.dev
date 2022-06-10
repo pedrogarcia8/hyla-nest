@@ -1,0 +1,18 @@
+ARG NODE_VERSION=node:14.17.6
+
+# Development image
+FROM ${NODE_VERSION} as development
+
+WORKDIR /home/node/app
+RUN chown node:node .
+
+COPY --chown=node:node . .
+
+USER node
+
+ENV NODE_ENV development
+
+RUN npm install && \
+    npm run build
+
+EXPOSE 3000
